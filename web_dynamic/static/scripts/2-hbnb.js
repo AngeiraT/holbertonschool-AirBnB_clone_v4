@@ -1,5 +1,15 @@
 //defer code from being executed until the web page has fully loaded.
 $('document').ready(function () {
+    $.get('http://0.0.0.0:5001/api/v1/status/', function (response) { 
+  if (response.status === 'OK') {
+    $('div#api_status').addClass('available'); //if in the status is “OK”, add the class available to the div#api_status
+  } else {
+    $('div#api_status').removeClass('available'); //remove the class available to the div#api_status
+  }
+});
+    
+    
+    
     const checksAmenities = {};
     
     $('input[type="checkbox"]').click(function () {
