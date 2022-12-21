@@ -10,7 +10,7 @@ function readCheckers() {
       } else {
           delete checksAmenities[$(this).attr('data-id')]; // if not remove the Amenity ID 
       }
-      $('.amenities H4').text(Object.values(checksAmenities).join(', ')); //update the h4 tag inside the div Amenities with the list of Amenities checked
+      $('.amenities H4').text(Object.values(checksAmenities).join(', ')); //update the h4 tag inside the div Amenities with the list of Amenities checked(only their names, values)
   });
 statusApi();
 dataFront();
@@ -20,9 +20,9 @@ $(':button').click(function () { //When the button tag is clicked, a new POST re
     url: 'http://0.0.0.0:5001/api/v1/places_search', //our project endpoint
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
-    data: JSON.stringify({ amenities: Object.keys(checksAmenities) }),   
+    data: JSON.stringify({ amenities: Object.keys(checksAmenities) }),  //the list of amenities checked 
     success: function (data) {
-        $('section.places').empty();
+        $('section.places').empty(); //This method does not remove the element itself, or its attributes.
         for (const place of Object.values(data)) {  // Loop into the result of the request and create an article tag representing a Place in the section.places.
             $('section.places').append(`<article>
     <div class="title_box">
