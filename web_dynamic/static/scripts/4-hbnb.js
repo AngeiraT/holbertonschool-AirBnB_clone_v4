@@ -20,7 +20,7 @@ $(':button').click(function () { //When the button tag is clicked, a new POST re
     url: 'http://0.0.0.0:5001/api/v1/places_search', //our project endpoint
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
-    data: JSON.stringify({ amenities: Object.values(checksAmenities) }),   
+    data: JSON.stringify({ amenities: Object.keys(checksAmenities) }),   
     success: function (data) {
         $('section.places').empty();
         for (const place of Object.values(data)) {  // Loop into the result of the request and create an article tag representing a Place in the section.places.
