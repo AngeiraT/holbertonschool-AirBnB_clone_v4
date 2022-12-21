@@ -1,12 +1,16 @@
-function datafront () {
+$('document').ready(readCheckers);   //defer code from being executed until the web page has fully loaded.
+const checksAmenities = {};
+
+function dataFront () {
     $.ajax({  //Send a post request from curl version into ajax jquery
         type: 'POST',
         url: 'http://0.0.0.0:5001/api/v1/places_search',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: '{}',
+        data: JSON.stringify({ amenities: Object.values(checksAmenities) }),
         success: function (data) {
-            for (const place of Object.values(data)) {  // Loop into the result of the request and create an article tag representing a Place in the section.places.
+          $('.places').empty();
+            for (const place of (data)) {  // Loop into the result of the request and create an article tag representing a Place in the section.places.
                 $('section.places').append(`<article>
         <div class="title_box">
           <h2>${place.name}</h2>
@@ -48,10 +52,7 @@ function statusApi () {
     });
 }
     
-$('document').ready(function () {    //defer code from being executed until the web page has fully loaded.
-    
-    const checksAmenities = {};
-    
+function readCheckers() {
     $('input[type="checkbox"]').click(function () {
         if ($(this).is(':checked')) { //if check store the Amenity ID in a dic with attribute data id and name
             checksAmenities[$(this).attr('data-id')] = $(this).attr('data-name');
@@ -61,5 +62,11 @@ $('document').ready(function () {    //defer code from being executed until the 
         $('.amenities H4').text(Object.values(checksAmenities).join(', ')); //update the h4 tag inside the div Amenities with the list of Amenities checked
     });
 statusApi();
-datafront();
+dataFront();
+$(':button').click(function () {
+  dataFront();	
 });
+}
+
+
+
